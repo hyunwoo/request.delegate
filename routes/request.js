@@ -12,36 +12,39 @@ router.get('/', function (req, res, next) {
 
 router.post('/', async (req, res) => {
   console.log('on post', req.body);
-  const option = {};
-  let result;
-  console.log(axios);
-  switch (req.body.method) {
-    case 'get':
-      const q = req.body.query;
-      if (!_.isNil(q)) {
-        option.url = req.body.url + '?' + queryString.stringify(req.body.query);
-      } else {
+  try {
+    const option = {};
+    let result;
+    switch (req.body.method) {
+      case 'get':
+        const q = req.body.query;
+        if (!_.isNil(q)) {
+          option.url = req.body.url + '?' + queryString.stringify(req.body.query);
+        } else {
+          option.url = req.body.url;
+        }
+        result = await axios[req.body.method](option.url);
+        res.json({
+          status: result.status,
+          headers: result.headers,
+          data: result.data,
+        });
+        break;
+      case 'post':
+      case 'put':
+      case 'delete':
         option.url = req.body.url;
-      }
-      result = await axios[req.body.method](option.url);
-      res.json({
-        status: result.status,
-        headers: result.headers,
-        data: result.data,
-      });
-      break;
-    case 'post':
-    case 'put':
-    case 'delete':
-      option.url = req.body.url;
-      option.body = req.body.body;
-      result = await axios[req.body.method](option.url, option.body);
-      res.json({
-        status: result.status,
-        headers: result.headers,
-        data: result.data,
-      });
-      break;
+        option.body = req.body.body;
+        result = await axios[req.body.method](option.url, option.body);
+        res.json({
+          status: result.status,
+          headers: result.headers,
+          data: result.data,
+        });
+        break;
+    }
+  } catch (e) {
+    res.json(e);
   }
 });
 
