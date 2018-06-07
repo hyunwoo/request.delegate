@@ -36,11 +36,7 @@ router.post('/', async (req, res) => {
         option.url = req.body.url;
         option.body = req.body.body;
         result = await axios[req.body.method](option.url, option.body);
-        res.json({
-          status: result.status,
-          headers: result.headers,
-          data: result.data,
-        });
+        res.json(result.data);
         break;
     }
   } catch (e) {
