@@ -1,5 +1,59 @@
 extends layout
 
+block head
+	<link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono:300,400" rel="stylesheet">
+	style.
+		body {
+			padding: 160px 0;
+			margin: 0;
+			font-family: 'Roboto', monospace;
+			color: #333;
+		}
+
+		.title {
+			text-align: center;
+			font-size: 64px;
+			font-weight: 200;
+			padding: 42px 0
+		}
+
+		.content {
+			max-width: 640px;
+			margin: auto;
+		}
+		h2 {
+			padding-top : 24px;
+		}
+
+		pre {
+			font-family: 'Roboto Mono', monospace;
+			font-size: 16px;
+			background: #333;
+			color: #eee;
+			padding : 12px;
+		}
+
 block content
-  h1= title
-  p Welcome to #{title}
+	.content
+		.title REQUEST DELEGATE
+		h2 Request Get Example
+		pre.
+			const option = {
+				method : 'get',
+				url : {endPoint},
+				query : {requestQuery},
+			};
+			$.get(option);
+
+		h2 Request [Post, Put, Delete] Example
+		pre.
+			const option = {
+				method : {post or put or delete},
+				url : {endPoint},
+				body : {requestBody},
+			};
+
+			$.get(option);
+
+
+
